@@ -59,7 +59,16 @@ Ilova faqat bitta foydalanuvchi uchun ishlaydi
 Internetga ulanmasdan ham ishlaydi
 Ma’lumotlar faqat shu brauzerda saqlanadi
 
+9. Umumiy tuzilma
 
-9. Xulosa
+Loyiha frontend (client-side) asosida qurilgan bo‘lib, 3 ta asosiy fayldan iborat:
+
+todo-app/
+│
+├── index.html      → UI (strukturasi)
+├── styles.css      → dizayn
+└── script.js       → logika
+
+10. Xulosa
 
 Ushbu loyiha oddiy, lekin foydali bo‘lib, kundalik vazifalarni boshqarishni osonlashtiradi.
