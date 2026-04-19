@@ -1,74 +1,212 @@
-Loyiha nomi: Todo App (Vazifalar ro‘yxati)
+# Todo App - Texnik Topshiriq
 
-1. Loyiha haqida
+## 📋 Loyiha Haqida
 
-Ushbu loyiha foydalanuvchilarga o‘z kundalik vazifalarini yozib borish, ularni bajarilgan yoki bajarilmagan holatda belgilash va boshqarish imkonini beruvchi oddiy web-ilovadan iborat.
+**Loyiha nomi:** Todo App - Chiroyli Vazifa Menejeri  
+**Versiya:** 2.0 (Arxitekturali qayta ishlangan)  
+**Texnologiya:** HTML5, CSS3, Vanilla JavaScript (MVC Pattern)
 
+**Maqsad:** Kundalik vazifalarni boshqarish uchun zamonaviy, chiroyli va foydalanish qulay bo'lgan web ilova yaratish.
 
-2. Loyiha maqsadi
+---
 
-Asosiy maqsad — foydalanuvchi uchun sodda va qulay interfeys orqali vazifalarni tartibga solish imkoniyatini yaratish.
+## 🏗️ Arxitektura (MVC Pattern)
 
+Loyiha **MVC** dizayn patterni asosida qurilgan:
 
-3. Asosiy funksiyalar
-Vazifa qo‘shish
-Foydalanuvchi yangi vazifa yozib, ro‘yxatga qo‘sha oladi. Agar input bo‘sh bo‘lsa, ogohlantirish chiqadi.
-Vazifani o‘chirish
-Har bir vazifani alohida o‘chirish mumkin.
-Vazifani tahrirlash
-Foydalanuvchi vazifa matnini o‘zgartira oladi.
-Bajarilgan deb belgilash
-Vazifa ustiga bosilganda yoki checkbox orqali bajarilgan deb belgilanadi.
-Filtrlash
-Vazifalarni quyidagicha ko‘rish mumkin:
-Barchasi
-Bajarilgan
-Bajarilmagan
-Statistika
-Sahifada jami vazifalar soni, bajarilgan va bajarilmaganlar ko‘rsatiladi.
-Tozalash funksiyasi
-Bajarilgan vazifalarni o‘chirish
-Barcha vazifalarni o‘chirish
+### 1. Model (`js/model.js`)
+**Vazifasi:** Ma'lumotlar va biznes mantiqni boshqarish
 
-4. Ma’lumotlarni saqlash
+**Asosiy funksiyalar:**
+- CRUD operatsiyalari (qo'shish, o'qish, o'zgartirish, o'chirish)
+- LocalStorage bilan ishlash
+- Observer pattern orqali o'zgarishlarni bildirish
+- Statistika va filtrlash
 
-Vazifalar brauzerning LocalStorage xotirasida saqlanadi. Sahifa yangilanganda ma’lumotlar saqlanib qoladi.
+**Asosiy metodlar:**
+- `add(text)` - Yangi vazifa qo'shish
+- `update(id, text)` - Vazifani o'zgartirish
+- `toggle(id)` - Bajarilgan/bajarilmagan deb belgilash
+- `delete(id)` - Vazifani o'chirish
+- `clearCompleted()` - Bajarilganlarni o'chirish
+- `clearAll()` - Barchasini o'chirish
+- `getFiltered(filter)` - Filtrlangan vazifalarni olish
+- `getStats()` - Statistikani olish
+- `subscribe(listener)` - Listener qo'shish
+- `notify()` - Listenerlarni chaqirish
 
-5. Dizayn talablari
-Oddiy va tushunarli interfeys
-Zamonaviy ranglar va tugmalar
-Turli ekran o‘lchamlariga moslashuv (responsive dizayn)
-Yengil animatsiyalar
+### 2. View (`js/view.js`)
+**Vazifasi:** Foydalanuvchi interfeysi va DOM manipulyatsiyasi
 
-6. Texnologiyalar
+**Asosiy funksiyalar:**
+- UI elementlarini render qilish
+- DOM manipulyatsiyalari
+- Event listenerlarni bog'lash
+- Bildirishnomalarni ko'rsatish
+- XSS himoyasi (HTML escape)
 
-Loyiha quyidagi texnologiyalar yordamida ishlab chiqiladi:
+**Asosiy metodlar:**
+- `renderTodos(todos, filter)` - Vazifalarni render qilish
+- `renderStats(stats)` - Statistikani render qilish
+- `showNotification(message, type)` - Bildirishnoma ko'rsatish
+- `on(event, handler)` - Event listener qo'shish
+- `getInputValue()` - Input qiymatini olish
+- `escapeHtml(text)` - HTML escape (XSS himoyasi)
 
-HTML
-CSS
-JavaScript
+### 3. Controller (`js/controller.js`)
+**Vazifasi:** Model va View o'rtasidagi bog'lovchi
 
-7. Ishlash tartibi
-Foydalanuvchi sahifaga kiradi
-Vazifa qo‘shadi
-Vazifani bajaradi yoki o‘chiradi
-Ma’lumotlar avtomatik saqlanadi
+**Asosiy funksiyalar:**
+- Foydalanuvchi kiritishlarini qabul qilish
+- Model va View o'rtasida ma'lumot almashinuvi
+- Biznes mantiqni boshqarish
+- Event handlerlar va validatsiya
 
-8. Cheklovlar
-Ilova faqat bitta foydalanuvchi uchun ishlaydi
-Internetga ulanmasdan ham ishlaydi
-Ma’lumotlar faqat shu brauzerda saqlanadi
+**Asosiy metodlar:**
+- `handleSubmit()` - Form submit handler
+- `handleFilter()` - Filter handler
+- `handleToggle()` - Toggle handler
+- `handleEdit()` - Tahrir handler
+- `handleDelete()` - O'chirish handler
+- `addTodo()` - Vazifa qo'shish
+- `render()` - Render qilish
 
-9. Umumiy tuzilma
+### 4. App (`js/app.js`)
+**Vazifasi:** Ilovani ishga tushirish va komponentlarni bog'lash
 
-Loyiha frontend (client-side) asosida qurilgan bo‘lib, 3 ta asosiy fayldan iborat:
+---
 
-todo-app/
-│
-├── index.html      → UI (strukturasi)
-├── styles.css      → dizayn
-└── script.js       → logika
+## 📊 Ma'lumotlar Strukturasi
 
-10. Xulosa
+### Todo Object
+```javascript
+{
+    id: string,           // Unikal ID
+    text: string,         // Vazifa matni
+    completed: boolean,   // Bajarilganmi
+    createdAt: string,    // ISO timestamp
+    updatedAt: string,    // ISO timestamp (optional)
+    completedAt: string   // ISO timestamp (optional)
+}
+```
 
-Ushbu loyiha oddiy, lekin foydali bo‘lib, kundalik vazifalarni boshqarishni osonlashtiradi.
+### LocalStorage
+- `todos` - Vazifalar ro'yxati (JSON array)
+- `filter` - Hozirgi filter ('all', 'completed', 'pending')
+
+---
+
+## 🔄 Ishlash Mekanizmi
+
+### Ilovani Ishga Tushirish
+```
+DOMContentLoaded → TodoApp.init() → Model/View/Controller yaratish → Initial render
+```
+
+### Yangi Vazifa Qo'shish
+```
+User input → Controller.handleSubmit() → Validatsiya → Model.add() → LocalStorage.save() → Model.notify() → Controller.render() → View.update()
+```
+
+---
+
+## 🎨 Dizayn Patternlar
+
+1. **MVC (Model-View-Controller)** - Separation of Concerns
+2. **Observer Pattern** - Model o'zgarganda observerlarni bildirish
+3. **Event Delegation** - Memory optimizatsiya
+4. **Singleton Pattern** - Bitta instance
+
+---
+
+## 🔒 Xavfsizlik
+
+- **XSS Himoyasi** - HTML escape funksiyasi
+- **Validatsiya** - Input bo'sh emasligini tekshirish
+- **Tasdiqlash** - O'chirishdan oldin confirm dialogs
+
+---
+
+## 📱 Responsivlik
+
+- **Desktop:** > 768px
+- **Tablet:** 768px - 480px
+- **Mobile:** < 480px
+
+**CSS:** Flexbox, Grid, Media queries, CSS Variables
+
+---
+
+## 📦 Fayl Strukturasi
+
+```
+todo app/
+├── index.html                 # Asosiy HTML
+├── styles.css                 # CSS stillari
+├── js/
+│   ├── model.js              # Model (ma'lumotlar)
+│   ├── view.js               # View (UI)
+│   ├── controller.js         # Controller (boshqaruv)
+│   └── app.js                # Asosiy app
+├── README.md                  # Loyiha hujjatlari
+├── FOYDALANISH_QOLLANMASI.md # Foydalanish qo'llanmasi
+├── TEKNIK_TOPSHIRIQ.md       # Texnik topshiriq (bu fayl)
+└── ARKHITEKTURA.md           # Arxitektura hujjatlari
+```
+
+---
+
+## 🎯 Funktsional Talablar
+
+### Asosiy Funksiyalar
+- ✅ Vazifa qo'shish, tahrirlash, o'chirish
+- ✅ Bajarilgan deb belgilash
+- ✅ Filtrlash (barchasi, bajarilgan, kutilmoqda)
+- ✅ Statistika (jami, bajarilgan, kutilmoqda)
+- ✅ Bajarilganlarni tozalash, barchasini o'chirish
+
+### Qo'shimcha Funksiyalar
+- ✅ LocalStorage bilan saqlash
+- ✅ Bildirishnomalar
+- ✅ Keyboard shortcuts (Ctrl+Enter, Esc)
+- ✅ Responsive dizayn
+- ✅ Animatsiyalar
+- ✅ XSS himoyasi
+
+---
+
+## 🔧 Texnik Talablar
+
+### Browser Talablari
+- Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
+- JavaScript yoqilgan bo'lishi shart
+
+### Performance
+- JavaScript bundle < 50KB
+- CSS bundle < 30KB
+- Fast load time
+
+---
+
+## ✅ Qabul Qilish Mezonlari
+
+### Must Have
+- [x] MVC arxitekturasi qo'llanilgan
+- [x] CRUD operatsiyalari to'liq ishlaydi
+- [x] LocalStorage bilan ishlaydi
+- [x] Responsive dizayn
+- [x] XSS himoyasi
+- [x] Kod standartlarga mos
+
+### Should Have
+- [x] Animatsiyalar smooth
+- [x] Bildirishnomalar chiroyli
+- [x] Keyboard shortcuts ishlaydi
+- [x] Error handling mavjud
+- [x] Kodda comments bor
+
+---
+
+**Topshiriq yakunlanganida:** Ilova ishga tushirilishi, barcha funksiyalar ishlashi, kod arxitekturasi bo'yicha baholanadi.
+
+**Muvaffaqiyat!** 🎉
