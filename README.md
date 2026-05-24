@@ -82,3 +82,4 @@ Bu loyiha bepul foydalanish uchun yaratilgan.
 **Versiya:** 1.0.0  
 **Yaratilgan:** 2024
 # todo-app
+# todo-list
