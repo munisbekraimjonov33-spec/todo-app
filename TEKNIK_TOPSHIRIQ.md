@@ -3,14 +3,13 @@
 ## 📋 Loyiha Haqida
 
 **Loyiha nomi:** Todo App - Chiroyli Vazifa Menejeri  
-**Versiya:** 2.0 (Arxitekturali qayta ishlangan)  
-**Texnologiya:** HTML5, CSS3, Vanilla JavaScript (MVC Pattern)
+**Texnologiya:** HTML5, CSS3,JavaScript
 
 **Maqsad:** Kundalik vazifalarni boshqarish uchun zamonaviy, chiroyli va foydalanish qulay bo'lgan web ilova yaratish.
 
 ---
 
-## 🏗️ Arxitektura (MVC Pattern)
+## 🏗️ Arxitektura 
 
 Loyiha **MVC** dizayn patterni asosida qurilgan:
 
